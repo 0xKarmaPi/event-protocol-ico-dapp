@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import { NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppWalletProvider from "./AppWalletProvider";
 
 const queryClient = new QueryClient();
 
@@ -12,12 +13,14 @@ export default function AppProvider({
 	children: React.ReactNode;
 }) {
 	return (
-		<NextUIProvider locale="en-US">
-			<SessionProvider>
-				<QueryClientProvider client={queryClient}>
-					<main>{children}</main>
-				</QueryClientProvider>
-			</SessionProvider>
-		</NextUIProvider>
+		<AppWalletProvider>
+			<NextUIProvider locale="en-US">
+				<SessionProvider>
+					<QueryClientProvider client={queryClient}>
+						<main>{children}</main>
+					</QueryClientProvider>
+				</SessionProvider>
+			</NextUIProvider>
+		</AppWalletProvider>
 	);
 }

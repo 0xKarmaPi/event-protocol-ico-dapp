@@ -1,7 +1,6 @@
 "use client";
 
 import {
-	Button,
 	Navbar,
 	NavbarContent,
 	NavbarItem,
@@ -15,6 +14,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export default function Header() {
 	const pathname = usePathname();
@@ -78,11 +78,7 @@ export default function Header() {
 
 			<NavbarContent justify="end">
 				<NavbarItem>
-					<Link href={"/admin"}>
-						<Button className="from-primary bg-gradient-to-tr to-purple-400 text-white">
-							Connect Wallet
-						</Button>
-					</Link>
+					<WalletMultiButton />
 				</NavbarItem>
 			</NavbarContent>
 		</Navbar>

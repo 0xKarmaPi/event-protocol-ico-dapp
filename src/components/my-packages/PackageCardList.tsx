@@ -1,6 +1,10 @@
+"use client";
+
 import { IPackage } from "@/types/package";
 import PackageCardItem from "./PackageCardItem";
 import { Card, Skeleton } from "@nextui-org/react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import nftIcon from "/public/assets/nft.png";
 
 const packages: IPackage[] = [
 	{
@@ -14,7 +18,7 @@ const packages: IPackage[] = [
 		claimable: true,
 		amountTokenClaimed: 1000,
 		amountTokenRemaining: 1000,
-		image: "https://i.seadn.io/s/raw/files/7b70c84c440c0470616c58fb01fb9546.png?auto=format&dpr=1&w=384",
+		image: "/assets/nft.png",
 	},
 	{
 		id: 2,
@@ -27,7 +31,7 @@ const packages: IPackage[] = [
 		claimable: true,
 		amountTokenClaimed: 500,
 		amountTokenRemaining: 1500,
-		image: "https://i.seadn.io/s/raw/files/de7bb80b79b8020a472628bee308d68b.png?auto=format&dpr=1&w=384",
+		image: "/assets/nft.png",
 	},
 	{
 		id: 3,
@@ -40,12 +44,20 @@ const packages: IPackage[] = [
 		claimable: false,
 		amountTokenClaimed: 2000,
 		amountTokenRemaining: 0,
-		image: "https://i.seadn.io/s/raw/files/ed3d2679da33c6eb4bdc4cf48f36c905.png?auto=format&dpr=1&w=384",
+		image: "/assets/nft.png",
 	},
 ];
 export default function PackageCardList() {
 	const loading = false;
+	const { connected } = useWallet();
 
+	if (!connected) {
+		return (
+			<div className="text-foreground text-center">
+				Please connect your wallet first.
+			</div>
+		);
+	}
 	if (loading) {
 		return (
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

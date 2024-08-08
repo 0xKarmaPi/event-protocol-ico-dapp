@@ -74,7 +74,7 @@ const Countdown: React.FC<CountdownProps> = ({
 				)}
 			</div>
 			<div className="mb-4">
-				<Progress value={80} />
+				<Progress value={80} aria-label="Loading..." />
 				<div className="mt-2 flex justify-between text-xs">
 					<span>Soft Cap: {softCap.toLocaleString()}</span>
 					<span>Hard Cap: {hardCap.toLocaleString()}</span>

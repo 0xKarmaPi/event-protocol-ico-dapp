@@ -23,15 +23,15 @@ export default function PackageCardItem({
 
 	return (
 		<div className="group cursor-pointer rounded-lg border border-slate-500 bg-slate-700 shadow-sm hover:bg-slate-600">
-			<div className="relative overflow-hidden rounded-lg">
+			<div className="relative flex items-center justify-center overflow-hidden rounded-lg">
 				<Image
 					src={packageItem.image}
 					alt=""
-					width={400}
-					height={400}
-					className="w-full rounded-t-lg transition-all group-hover:scale-105"
+					width={300}
+					height={300}
+					className="rounded-t-lg transition-all group-hover:scale-105"
 				/>
-				<p className="text-primary absolute left-4 top-4 rounded-lg border bg-white p-1 px-2 font-bold backdrop-blur-sm">
+				<p className="text-primary absolute left-4 top-4 rounded-lg border p-1 px-2 font-bold backdrop-blur-lg">
 					No.{packageItem.id}
 				</p>
 			</div>

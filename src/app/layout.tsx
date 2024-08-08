@@ -26,8 +26,8 @@ export default function RootLayout({
 					"via-default-200 dark min-h-screen bg-gradient-to-tr from-slate-800 to-blue-950 font-sans antialiased",
 				)}
 			>
-				<ToastContainer theme="light" />
 				<AppProvider>
+					<ToastContainer theme="light" />
 					<Header />
 					{children}
 				</AppProvider>

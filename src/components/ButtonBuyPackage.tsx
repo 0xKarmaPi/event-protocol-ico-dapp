@@ -14,22 +14,20 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import { shortAddress } from "@/utils/common";
 import dayjs from "dayjs";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { toast } from "react-toastify";
+import nftIcon from "/public/assets/nft.png";
+import {
+	AMOUNT_TOKEN,
+	CLIFF_TIME,
+	CYCLE_TIME,
+	INITIAL_PERCENT,
+	PRICE_PER_PACKAGE,
+} from "@/utils/constants";
 
-const mockPackage: IPackage = {
-	id: 1,
-	buyer: "0x0000000000000000000000000000000000000000",
-	buyTime: "2022-01-01T00:00:00.000Z",
-	cliffTime: "30 days",
-	startClaimingTime: "2025-01-01T00:00:00.000Z",
-	initialPercent: 10,
-	cycle: "30 days",
-	claimable: true,
-	amountTokenClaimed: 1000,
-	amountTokenRemaining: 1000,
-	image: "https://i.seadn.io/s/raw/files/7b70c84c440c0470616c58fb01fb9546.png?auto=format&dpr=1&w=384",
-};
 export default function ButtonBuyPackage() {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const { publicKey, connected } = useWallet();
 
 	const valueRenderer = (label: string, value: string | ReactNode) => {
 		return (
@@ -40,17 +38,30 @@ export default function ButtonBuyPackage() {
 		);
 	};
 
+	const handleClickBuyPackage = () => {
+		if (!connected) {
+			toast("Please connect your wallet");
+			return;
+		}
+		onOpen();
+	};
 	return (
 		<>
 			<Button
-				onPress={onOpen}
+				onPress={handleClickBuyPackage}
 				fullWidth
 				color="warning"
 				startContent={<FaCartShopping />}
 			>
 				Buy Package Now
 			</Button>
-			<Modal size="2xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+			<Modal
+				className="bg-slate-800"
+				placement="top"
+				size="2xl"
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+			>
 				<ModalContent>
 					{(onClose) => (
 						<>
@@ -59,10 +70,10 @@ export default function ButtonBuyPackage() {
 							</ModalHeader>
 							<ModalBody>
 								<div className="flex gap-4">
-									<div className="h-[200px] w-[200px] overflow-hidden rounded-lg">
+									<div className="flex h-[200px] w-[200px] items-center justify-center overflow-hidden rounded-lg">
 										<Image
 											className="transition-all hover:scale-105"
-											src={mockPackage.image}
+											src={nftIcon}
 											alt=""
 											width={200}
 											height={200}
@@ -70,12 +81,8 @@ export default function ButtonBuyPackage() {
 									</div>
 									<div className="flex-1">
 										{valueRenderer(
-											"Package ID",
-											mockPackage.id,
-										)}
-										{valueRenderer(
 											"Buyer",
-											shortAddress(mockPackage.buyer),
+											shortAddress(publicKey?.toString()),
 										)}
 										{valueRenderer(
 											"Buy time",
@@ -84,34 +91,35 @@ export default function ButtonBuyPackage() {
 											),
 										)}
 										{valueRenderer(
+											"Cliff time",
+											`${CLIFF_TIME / 86400000} days`,
+										)}
+										{valueRenderer(
 											"Start claiming time",
 											dayjs(
-												mockPackage.startClaimingTime,
+												new Date().getTime() +
+													CLIFF_TIME,
 											).format("MMM DD, YYYY - HH:mm A"),
 										)}
 										{valueRenderer(
 											"Initial percent",
-											`${mockPackage.initialPercent}%`,
+											`${INITIAL_PERCENT}%`,
 										)}
 										{valueRenderer(
 											"Cycle",
-											mockPackage.cycle,
+											`${CYCLE_TIME / 86400000} days`,
 										)}
 										{valueRenderer(
 											"Token claimable",
 											<span className="text-yellow-500">
-												2000 $event
+												{AMOUNT_TOKEN} $event
 											</span>,
 										)}
 										<Divider />
 										{valueRenderer(
 											"Price",
 											<span className="text-green-500">
-												10 SOL <br />{" "}
-												<span className="text-sm">
-													{" "}
-													≈ $1,536.95
-												</span>
+												{PRICE_PER_PACKAGE} SOL <br />{" "}
 											</span>,
 										)}
 									</div>
