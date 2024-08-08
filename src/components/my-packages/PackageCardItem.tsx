@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { shortAddress } from "@/utils/common";
 import { Button, Divider } from "@nextui-org/react";
 import { FaCoins } from "react-icons/fa6";
+import { ReactNode } from "react";
 
 interface IPackageCardItemProps {
 	packageItem: IPackage;
@@ -11,7 +12,7 @@ interface IPackageCardItemProps {
 export default function PackageCardItem({
 	packageItem,
 }: IPackageCardItemProps) {
-	const valuePackageItem = (label: string, value: string) => {
+	const valuePackageItem = (label: string, value: string | ReactNode) => {
 		return (
 			<div className="mt-2 flex items-center justify-between">
 				<p className="text-xs">{label}</p>
@@ -55,11 +56,16 @@ export default function PackageCardItem({
 				{valuePackageItem("Cycle", packageItem.cycle)}
 				{valuePackageItem(
 					"Total Token claimed",
-					`${packageItem.amountTokenClaimed.toLocaleString()} $event`,
+					<span className="text-yellow-500">
+						{packageItem.amountTokenClaimed.toLocaleString()} $event
+					</span>,
 				)}
 				{valuePackageItem(
 					"Total Token claimed",
-					`${packageItem.amountTokenRemaining.toLocaleString()} $event`,
+					<span className="text-yellow-500">
+						{packageItem.amountTokenRemaining.toLocaleString()}{" "}
+						$event
+					</span>,
 				)}
 				<Divider className="my-4" />
 				{packageItem.claimable ? (

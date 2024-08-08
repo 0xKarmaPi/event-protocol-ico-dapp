@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Progress } from "@nextui-org/react";
+import { Progress } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import { FaCartShopping } from "react-icons/fa6";
+import ButtonBuyPackage from "./ButtonBuyPackage";
 
 interface CountdownProps {
 	targetDate: string;
@@ -18,7 +18,6 @@ const Countdown: React.FC<CountdownProps> = ({
 	totalRaised,
 	softCap,
 	hardCap,
-	tokenEdition,
 }) => {
 	const calculateTimeLeft = () => {
 		const difference = +new Date(targetDate) - +new Date();
@@ -62,7 +61,7 @@ const Countdown: React.FC<CountdownProps> = ({
 	return (
 		<div className="from-primary mx-auto rounded-lg bg-gradient-to-br to-purple-800 p-6 text-white shadow-lg">
 			<div className="mb-6 text-center">
-				<h2 className="text-2xl font-bold">Eventprotocol ICO ends:</h2>
+				<h2 className="text-2xl font-bold">Eventprotocol IVO ends:</h2>
 				<p>
 					Total SOL to be raised: {totalRaised.toLocaleString()} SOL
 				</p>
@@ -85,13 +84,7 @@ const Countdown: React.FC<CountdownProps> = ({
 				Total packages: {Number(1000000).toLocaleString()} packages
 			</p>
 			<div className="mb-6 text-center">
-				<Button
-					fullWidth
-					color="warning"
-					startContent={<FaCartShopping />}
-				>
-					Buy Package Now
-				</Button>
+				<ButtonBuyPackage />
 			</div>
 		</div>
 	);

@@ -1,5 +1,6 @@
 import { IPackage } from "@/types/package";
 import PackageCardItem from "./PackageCardItem";
+import { Card, Skeleton } from "@nextui-org/react";
 
 const packages: IPackage[] = [
 	{
@@ -43,6 +44,54 @@ const packages: IPackage[] = [
 	},
 ];
 export default function PackageCardList() {
+	const loading = false;
+
+	if (loading) {
+		return (
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+				{[...Array(6)].map((_, index) => (
+					<Card className="space-y-5 p-4" radius="lg">
+						<Skeleton className="rounded-lg">
+							<div className="bg-default-300 h-[200px] rounded-lg"></div>
+						</Skeleton>
+						<div className="space-y-3">
+							<Skeleton className="w-3/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-3/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-4/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-4/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-2/5 rounded-lg">
+								<div className="bg-default-300 h-3 w-2/5 rounded-lg"></div>
+							</Skeleton>
+						</div>
+						<div className="space-y-3">
+							<Skeleton className="w-3/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-3/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-4/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-4/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-2/5 rounded-lg">
+								<div className="bg-default-300 h-3 w-2/5 rounded-lg"></div>
+							</Skeleton>
+						</div>
+						<div className="space-y-3">
+							<Skeleton className="w-3/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-3/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-4/5 rounded-lg">
+								<div className="bg-default-200 h-3 w-4/5 rounded-lg"></div>
+							</Skeleton>
+							<Skeleton className="w-2/5 rounded-lg">
+								<div className="bg-default-300 h-3 w-2/5 rounded-lg"></div>
+							</Skeleton>
+						</div>
+					</Card>
+				))}
+			</div>
+		);
+	}
 	return (
 		<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 			{packages.map((item) => (
