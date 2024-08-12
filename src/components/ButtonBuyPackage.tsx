@@ -1,4 +1,3 @@
-import { IPackage } from "@/types/package";
 import {
 	Button,
 	Divider,
@@ -11,7 +10,7 @@ import {
 } from "@nextui-org/react";
 import { FaCartShopping } from "react-icons/fa6";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { shortAddress } from "@/utils/common";
 import dayjs from "dayjs";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -24,10 +23,26 @@ import {
 	INITIAL_PERCENT,
 	PRICE_PER_PACKAGE,
 } from "@/utils/constants";
+import {
+	generateSigner,
+	some,
+	transactionBuilder,
+} from "@metaplex-foundation/umi";
+import useUmi, {
+	candyMachineAddress,
+	collectionMintAddress,
+	receivePaymentAddress,
+} from "@/hooks/umi";
+import { fetchDigitalAsset } from "@metaplex-foundation/mpl-token-metadata";
+import { setComputeUnitLimit } from "@metaplex-foundation/mpl-toolbox";
+import { mintV2 } from "@metaplex-foundation/mpl-candy-machine";
 
 export default function ButtonBuyPackage() {
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const { publicKey, connected } = useWallet();
+	const [isPending, setPending] = useState(false);
+
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { connected, publicKey: walletAddress } = useWallet();
+	const umi = useUmi();
 
 	const valueRenderer = (label: string, value: string | ReactNode) => {
 		return (
@@ -45,6 +60,42 @@ export default function ButtonBuyPackage() {
 		}
 		onOpen();
 	};
+
+	const handleConfirmBuyPackage = async () => {
+		setPending(true);
+		try {
+			const collectionNft = await fetchDigitalAsset(
+				umi,
+				collectionMintAddress,
+			);
+			const nftMint = generateSigner(umi);
+			const res = await transactionBuilder()
+				.add(setComputeUnitLimit(umi, { units: 800_000 }))
+				.add(
+					mintV2(umi, {
+						candyMachine: candyMachineAddress,
+						nftMint: nftMint,
+						collectionMint: collectionMintAddress,
+						collectionUpdateAuthority:
+							collectionNft.metadata.updateAuthority,
+						mintArgs: {
+							solPayment: some({
+								destination: receivePaymentAddress,
+							}),
+						},
+					}),
+				)
+				.sendAndConfirm(umi);
+			if (res) {
+				toast("Buy a package successfully", { type: "success" });
+				onClose();
+			}
+		} catch (error) {
+			toast("Error buying package", { type: "error" });
+		} finally {
+			setPending(false);
+		}
+	};
 	return (
 		<>
 			<Button
@@ -60,7 +111,6 @@ export default function ButtonBuyPackage() {
 				placement="top"
 				size="2xl"
 				isOpen={isOpen}
-				onOpenChange={onOpenChange}
 			>
 				<ModalContent>
 					{(onClose) => (
@@ -82,7 +132,9 @@ export default function ButtonBuyPackage() {
 									<div className="flex-1">
 										{valueRenderer(
 											"Buyer",
-											shortAddress(publicKey?.toString()),
+											shortAddress(
+												walletAddress?.toString(),
+											),
 										)}
 										{valueRenderer(
 											"Buy time",
@@ -133,7 +185,11 @@ export default function ButtonBuyPackage() {
 								>
 									Cancel
 								</Button>
-								<Button color="primary" onPress={onClose}>
+								<Button
+									isLoading={isPending}
+									color="primary"
+									onPress={handleConfirmBuyPackage}
+								>
 									Buy
 								</Button>
 							</ModalFooter>

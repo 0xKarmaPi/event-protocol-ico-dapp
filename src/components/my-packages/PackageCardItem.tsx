@@ -29,14 +29,15 @@ export default function PackageCardItem({
 					alt=""
 					width={300}
 					height={300}
-					className="rounded-t-lg transition-all group-hover:scale-105"
+					className="w-full rounded-t-lg transition-all group-hover:scale-110"
 				/>
-				<p className="text-primary absolute left-4 top-4 rounded-lg border p-1 px-2 font-bold backdrop-blur-lg">
+				<p className="absolute left-4 top-4 rounded-lg border bg-white p-1 px-2 font-bold text-primary backdrop-blur-lg">
 					No.{packageItem.id}
 				</p>
 			</div>
 
 			<div className="p-4">
+				{valuePackageItem("NFT name", packageItem.name)}
 				{valuePackageItem("Buyer", shortAddress(packageItem.buyer))}
 				{valuePackageItem(
 					"Buy time",
@@ -61,7 +62,7 @@ export default function PackageCardItem({
 					</span>,
 				)}
 				{valuePackageItem(
-					"Total Token claimed",
+					"Total Token remaining",
 					<span className="text-yellow-500">
 						{packageItem.amountTokenRemaining.toLocaleString()}{" "}
 						$event
@@ -71,7 +72,7 @@ export default function PackageCardItem({
 				{packageItem.claimable ? (
 					<Button
 						fullWidth
-						className="from-primary border-primary border bg-gradient-to-r to-purple-400 font-bold"
+						className="border border-primary bg-gradient-to-r from-primary to-purple-400 font-bold"
 						startContent={<FaCoins />}
 					>
 						Claim Token

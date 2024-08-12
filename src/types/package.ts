@@ -10,4 +10,5 @@ export interface IPackage {
 	amountTokenClaimed: number;
 	amountTokenRemaining: number;
 	image: string;
+	name?: string;
 }

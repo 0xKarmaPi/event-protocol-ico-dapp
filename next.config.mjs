@@ -7,6 +7,11 @@ const nextConfig = {
 				port: "",
 				pathname: "/**",
 			},
+			{
+				hostname: "nftstorage.link",
+				port: "",
+				pathname: "/**",
+			},
 		],
 	},
 };
