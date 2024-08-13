@@ -40,7 +40,7 @@ import { mintV2 } from "@metaplex-foundation/mpl-candy-machine";
 export default function ButtonBuyPackage() {
 	const [isPending, setPending] = useState(false);
 
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 	const { connected, publicKey: walletAddress } = useWallet();
 	const umi = useUmi();
 
@@ -111,6 +111,7 @@ export default function ButtonBuyPackage() {
 				placement="top"
 				size="2xl"
 				isOpen={isOpen}
+				onOpenChange={onOpenChange}
 			>
 				<ModalContent>
 					{(onClose) => (
@@ -181,7 +182,7 @@ export default function ButtonBuyPackage() {
 								<Button
 									color="danger"
 									variant="light"
-									onPress={onClose}
+									onPress={() => onClose()}
 								>
 									Cancel
 								</Button>
