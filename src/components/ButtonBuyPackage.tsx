@@ -36,6 +36,8 @@ import useUmi, {
 import { fetchDigitalAsset } from "@metaplex-foundation/mpl-token-metadata";
 import { setComputeUnitLimit } from "@metaplex-foundation/mpl-toolbox";
 import { mintV2 } from "@metaplex-foundation/mpl-candy-machine";
+import { useQuery } from "@tanstack/react-query";
+import { getWalletBalance } from "@/services/wallet";
 
 export default function ButtonBuyPackage() {
 	const [isPending, setPending] = useState(false);
@@ -44,11 +46,16 @@ export default function ButtonBuyPackage() {
 	const { connected, publicKey: walletAddress } = useWallet();
 	const umi = useUmi();
 
+	const { data: balance } = useQuery({
+		queryKey: ["mybalance", walletAddress],
+		queryFn: () => getWalletBalance(umi, walletAddress!),
+	});
+
 	const valueRenderer = (label: string, value: string | ReactNode) => {
 		return (
 			<div className="mt-2 flex items-center justify-between">
 				<p className="text-sm">{label}</p>
-				<p className="text-right text-lg font-bold">{value}</p>
+				<p className="text-right text-base font-bold">{value}</p>
 			</div>
 		);
 	};
@@ -175,6 +182,12 @@ export default function ButtonBuyPackage() {
 												{PRICE_PER_PACKAGE} SOL <br />{" "}
 											</span>,
 										)}
+										{valueRenderer(
+											"Your Balance",
+											<span className="text-green-500">
+												{balance} SOL <br />{" "}
+											</span>,
+										)}
 									</div>
 								</div>
 							</ModalBody>
@@ -187,11 +200,16 @@ export default function ButtonBuyPackage() {
 									Cancel
 								</Button>
 								<Button
+									isDisabled={
+										(balance ?? 0) < PRICE_PER_PACKAGE
+									}
 									isLoading={isPending}
 									color="primary"
 									onPress={handleConfirmBuyPackage}
 								>
-									Buy
+									{(balance ?? 0) < PRICE_PER_PACKAGE
+										? "Not enough SOL"
+										: "Buy"}
 								</Button>
 							</ModalFooter>
 						</>

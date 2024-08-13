@@ -6,6 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import useUmi from "@/hooks/umi";
 import { useQuery } from "@tanstack/react-query";
 import { getMyPackages } from "@/services/wallet";
+import NoDataFound from "../NoDataFound";
 
 export default function PackageCardList() {
 	const { connected, publicKey: walletAddress } = useWallet();
@@ -72,10 +73,15 @@ export default function PackageCardList() {
 		);
 	}
 	return (
-		<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-			{packages?.map((item) => (
-				<PackageCardItem key={item.id} packageItem={item} />
-			))}
-		</div>
+		<>
+			{packages?.length === 0 && (
+				<NoDataFound message="No packages found" />
+			)}
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+				{packages?.map((item) => (
+					<PackageCardItem key={item.id} packageItem={item} />
+				))}
+			</div>
+		</>
 	);
 }

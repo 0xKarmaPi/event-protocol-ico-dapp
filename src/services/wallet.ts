@@ -47,3 +47,11 @@ export const getMyPackages = async (
 
 	return packages;
 };
+
+export const getWalletBalance = async (
+	umi: Umi,
+	walletAddress: PublicKey,
+): Promise<number> => {
+	const balance = await umi.rpc.getBalance(publicKey(walletAddress));
+	return Number(balance.basisPoints) / Number(10 ** balance.decimals);
+};
