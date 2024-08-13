@@ -14,18 +14,23 @@ export const getMyPackages = async (
 	const assets = await fetchAllMetadataByOwner(umi, publicKey(walletAddress));
 
 	const jsonDatas = await Promise.all(
-		assets.map(async (asset) => {
-			// Check if the data is already in the cache
-			if (cache[asset.uri]) {
-				return cache[asset.uri];
-			}
-
-			// Fetch the data and cache it
-			const response = await fetch(asset.uri);
-			const json = await response.json();
-			cache[asset.uri] = json; // Store the fetched data in the cache
-			return json;
-		}),
+		assets
+			.filter(
+				(asset) =>
+					(asset?.collection as any)?.value?.key ===
+					process.env.NEXT_PUBLIC_COLLECTION_MINT_ADDRESS,
+			)
+			.map(async (asset) => {
+				// Check if the data is already in the cache
+				if (cache[asset.uri]) {
+					return cache[asset.uri];
+				}
+				// Fetch the data and cache it
+				const response = await fetch(asset.uri);
+				const json = await response.json();
+				cache[asset.uri] = json; // Store the fetched data in the cache
+				return json;
+			}),
 	);
 
 	const packages: IPackage[] = jsonDatas?.map((json, index) => ({
