@@ -12,6 +12,11 @@ const nextConfig = {
 				port: "",
 				pathname: "/**",
 			},
+			{
+				hostname: "gray-capitalist-cephalopod-696.mypinata.cloud",
+				port: "",
+				pathname: "/**",
+			},
 		],
 	},
 };
