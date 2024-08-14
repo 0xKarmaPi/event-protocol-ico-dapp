@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "/public/assets/logo.jpg";
+import logo from "/public/assets/logo.png";
 import { NavbarBrand } from "@nextui-org/react";
 import Link from "next/link";
 
@@ -10,8 +10,7 @@ export default function Logo() {
 				<Image
 					alt="Event Protocol"
 					src={logo}
-					width={32}
-					className="rounded-full"
+					className="h-[48px] w-[48px] rounded-full object-contain"
 				/>
 				<span className="ml-2">Eventprotocol</span>
 			</NavbarBrand>

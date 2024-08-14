@@ -5,6 +5,7 @@ import { shortAddress } from "@/utils/common";
 import { Button, Divider } from "@nextui-org/react";
 import { FaCoins } from "react-icons/fa6";
 import { ReactNode } from "react";
+import logoText from "/public/assets/logo-text.png";
 
 interface IPackageCardItemProps {
 	packageItem: IPackage;
@@ -25,7 +26,7 @@ export default function PackageCardItem({
 		<div className="group cursor-pointer rounded-lg border border-slate-500 bg-slate-700 shadow-sm hover:bg-slate-600">
 			<div className="relative flex items-center justify-center overflow-hidden rounded-lg">
 				<Image
-					src={packageItem.image}
+					src={logoText}
 					alt=""
 					width={300}
 					height={300}

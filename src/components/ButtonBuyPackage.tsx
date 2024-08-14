@@ -15,7 +15,7 @@ import { shortAddress } from "@/utils/common";
 import dayjs from "dayjs";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { toast } from "react-toastify";
-import nftIcon from "/public/assets/nft.png";
+import nftIcon from "/public/assets/logo-text.png";
 import {
 	AMOUNT_TOKEN,
 	CLIFF_TIME,
@@ -130,7 +130,7 @@ export default function ButtonBuyPackage() {
 								<div className="flex gap-4">
 									<div className="flex h-[200px] w-[200px] items-center justify-center overflow-hidden rounded-lg">
 										<Image
-											className="transition-all hover:scale-105"
+											className="rounded-lg"
 											src={nftIcon}
 											alt=""
 											width={200}
