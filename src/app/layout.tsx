@@ -9,8 +9,8 @@ import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Eventprotocol ICO",
-	description: "Eventprotocol ICO dApp",
+	title: "Eventprotocol IVO",
+	description: "Eventprotocol IVO dApp",
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
 			<body
 				className={cx(
 					inter.className,
-					"via-default-200 dark min-h-screen bg-gradient-to-tr from-slate-800 to-blue-950 font-sans antialiased",
+					"min-h-screen bg-gradient-to-tr from-slate-800 via-default-200 to-blue-950 font-sans antialiased dark",
 				)}
 			>
 				<AppProvider>
