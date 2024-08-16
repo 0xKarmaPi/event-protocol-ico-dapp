@@ -1,0 +1,556 @@
+{
+	"address": "3iFSXD1ANyYX7LXa7F4pwgq6LRrT3dXJWiP25uZSb2k7",
+	"metadata": {
+		"name": "event_protocol_ico_sc",
+		"version": "0.1.0",
+		"spec": "0.1.0",
+		"description": "Created with Anchor"
+	},
+	"instructions": [
+		{
+			"name": "claim_token",
+			"discriminator": [116, 206, 27, 191, 166, 19, 0, 73],
+			"accounts": [
+				{
+					"name": "master",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [109, 97, 115, 116, 101, 114]
+							}
+						]
+					}
+				},
+				{
+					"name": "wrapper",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [119, 114, 97, 112, 112, 101, 114]
+							},
+							{
+								"kind": "arg",
+								"path": "nft_address"
+							}
+						]
+					}
+				},
+				{
+					"name": "mint_of_nft"
+				},
+				{
+					"name": "sender_nft_ata",
+					"writable": true
+				},
+				{
+					"name": "mint_metadata_account",
+					"docs": ["CHECK"],
+					"writable": true
+				},
+				{
+					"name": "mint_of_event_token"
+				},
+				{
+					"name": "vault_owner_pda",
+					"docs": ["CHECK"],
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110, 95, 111, 119, 110, 101, 114
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "vault_event_token",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110
+								]
+							},
+							{
+								"kind": "account",
+								"path": "mint_of_event_token"
+							}
+						]
+					}
+				},
+				{
+					"name": "sender_event_token_ata",
+					"writable": true
+				},
+				{
+					"name": "signer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+				}
+			],
+			"args": [
+				{
+					"name": "nft_address",
+					"type": "pubkey"
+				}
+			]
+		},
+		{
+			"name": "deposit_event_token",
+			"discriminator": [99, 238, 73, 237, 111, 134, 238, 209],
+			"accounts": [
+				{
+					"name": "master",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [109, 97, 115, 116, 101, 114]
+							}
+						]
+					}
+				},
+				{
+					"name": "mint_of_event_token"
+				},
+				{
+					"name": "vault_owner_pda",
+					"docs": ["CHECK"],
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110, 95, 111, 119, 110, 101, 114
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "vault_event_token",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110
+								]
+							},
+							{
+								"kind": "account",
+								"path": "mint_of_event_token"
+							}
+						]
+					}
+				},
+				{
+					"name": "sender_event_token_ata",
+					"writable": true
+				},
+				{
+					"name": "signer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+				},
+				{
+					"name": "rent",
+					"address": "SysvarRent111111111111111111111111111111111"
+				}
+			],
+			"args": [
+				{
+					"name": "amount",
+					"type": "u64"
+				}
+			]
+		},
+		{
+			"name": "hello",
+			"discriminator": [149, 118, 59, 220, 196, 127, 161, 179],
+			"accounts": [],
+			"args": []
+		},
+		{
+			"name": "init_a_wrapper",
+			"discriminator": [64, 46, 109, 204, 183, 53, 7, 11],
+			"accounts": [
+				{
+					"name": "master",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [109, 97, 115, 116, 101, 114]
+							}
+						]
+					}
+				},
+				{
+					"name": "wrapper",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [119, 114, 97, 112, 112, 101, 114]
+							},
+							{
+								"kind": "arg",
+								"path": "nft_address"
+							}
+						]
+					}
+				},
+				{
+					"name": "mint_of_nft"
+				},
+				{
+					"name": "mint_nft_metadata_account",
+					"docs": ["CHECK"],
+					"writable": true
+				},
+				{
+					"name": "sender_nft_ata",
+					"writable": true
+				},
+				{
+					"name": "signer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				}
+			],
+			"args": [
+				{
+					"name": "nft_address",
+					"type": "pubkey"
+				}
+			]
+		},
+		{
+			"name": "init_master",
+			"discriminator": [168, 49, 22, 248, 228, 56, 111, 24],
+			"accounts": [
+				{
+					"name": "master",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [109, 97, 115, 116, 101, 114]
+							}
+						]
+					}
+				},
+				{
+					"name": "signer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				}
+			],
+			"args": [
+				{
+					"name": "nft_collection_address",
+					"type": "pubkey"
+				},
+				{
+					"name": "start_sale_time",
+					"type": "u64"
+				},
+				{
+					"name": "end_sale_time",
+					"type": "u64"
+				},
+				{
+					"name": "cliff_time",
+					"type": "u64"
+				},
+				{
+					"name": "cycle",
+					"type": "u64"
+				}
+			]
+		},
+		{
+			"name": "init_vault_event_token",
+			"discriminator": [106, 35, 160, 42, 188, 38, 59, 206],
+			"accounts": [
+				{
+					"name": "master",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [109, 97, 115, 116, 101, 114]
+							}
+						]
+					}
+				},
+				{
+					"name": "mint_of_event_token"
+				},
+				{
+					"name": "vault_owner_pda",
+					"docs": ["CHECK"],
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110, 95, 111, 119, 110, 101, 114
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "vault_event_token",
+					"writable": true,
+					"pda": {
+						"seeds": [
+							{
+								"kind": "const",
+								"value": [
+									118, 97, 117, 108, 116, 95, 116, 111, 107,
+									101, 110
+								]
+							},
+							{
+								"kind": "account",
+								"path": "mint_of_event_token"
+							}
+						]
+					}
+				},
+				{
+					"name": "signer",
+					"writable": true,
+					"signer": true
+				},
+				{
+					"name": "system_program",
+					"address": "11111111111111111111111111111111"
+				},
+				{
+					"name": "token_program",
+					"address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+				}
+			],
+			"args": []
+		}
+	],
+	"accounts": [
+		{
+			"name": "Master",
+			"discriminator": [168, 213, 193, 12, 77, 162, 58, 235]
+		},
+		{
+			"name": "Wrapper",
+			"discriminator": [161, 11, 109, 119, 86, 61, 163, 136]
+		}
+	],
+	"errors": [
+		{
+			"code": 6000,
+			"name": "MasterIsAlreadyInitialized",
+			"msg": "Master is already initialized"
+		},
+		{
+			"code": 6001,
+			"name": "InvalidTimeRange",
+			"msg": "Invalid time range"
+		},
+		{
+			"code": 6002,
+			"name": "InvalidCliffTime",
+			"msg": "Invalid cliff time"
+		},
+		{
+			"code": 6003,
+			"name": "InvalidCycle",
+			"msg": "Invalid cycle"
+		},
+		{
+			"code": 6004,
+			"name": "VaultEventTokenIsAlreadyInitialized",
+			"msg": "Vault EVENT token is already initialized"
+		},
+		{
+			"code": 6005,
+			"name": "VaultEventTokenIsNotInitialized",
+			"msg": "Vault EVENT token is not initialized"
+		},
+		{
+			"code": 6006,
+			"name": "InvalidAmount",
+			"msg": "Invalid amount"
+		},
+		{
+			"code": 6007,
+			"name": "CliffTimeNotReachedYet",
+			"msg": "Cliff time not reached yet"
+		},
+		{
+			"code": 6008,
+			"name": "WrapperNotInitialized",
+			"msg": "Wrapper not initialized"
+		},
+		{
+			"code": 6009,
+			"name": "WrapperIdIsNotValid",
+			"msg": "wrapper_id is not valid"
+		},
+		{
+			"code": 6010,
+			"name": "CollectionKeyIsNotValid",
+			"msg": "Collection key is not valid"
+		},
+		{
+			"code": 6011,
+			"name": "WrapperAlreadyInitialized",
+			"msg": "Wrapper already initialized"
+		},
+		{
+			"code": 6012,
+			"name": "YouAreNotTheOwnerOfTheNFT",
+			"msg": "You are not the owner of the NFT"
+		},
+		{
+			"code": 6013,
+			"name": "RequiredAnNFT",
+			"msg": "Required an NFT"
+		},
+		{
+			"code": 6014,
+			"name": "NoClaimableAmount",
+			"msg": "No claimable amount"
+		}
+	],
+	"types": [
+		{
+			"name": "Master",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "initialized",
+						"type": "bool"
+					},
+					{
+						"name": "owner",
+						"type": "pubkey"
+					},
+					{
+						"name": "vault_initialized",
+						"type": "bool"
+					},
+					{
+						"name": "nft_collection_address",
+						"type": "pubkey"
+					},
+					{
+						"name": "start_sale_time",
+						"type": "u64"
+					},
+					{
+						"name": "end_sale_time",
+						"type": "u64"
+					},
+					{
+						"name": "cliff_time",
+						"type": "u64"
+					},
+					{
+						"name": "cycle",
+						"type": "u64"
+					},
+					{
+						"name": "total_wrapper",
+						"type": "u64"
+					},
+					{
+						"name": "total_sold_wrapper",
+						"type": "u64"
+					},
+					{
+						"name": "token_per_wrapper",
+						"type": "u64"
+					}
+				]
+			}
+		},
+		{
+			"name": "Wrapper",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "initialized",
+						"type": "bool"
+					},
+					{
+						"name": "nft_address",
+						"type": "pubkey"
+					},
+					{
+						"name": "init_time",
+						"type": "u64"
+					},
+					{
+						"name": "start_time",
+						"type": "u64"
+					},
+					{
+						"name": "amount_of_tokens_claimed",
+						"type": "u64"
+					}
+				]
+			}
+		}
+	]
+}

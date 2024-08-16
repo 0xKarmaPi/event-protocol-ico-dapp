@@ -7,15 +7,19 @@ import useUmi from "@/hooks/umi";
 import { useQuery } from "@tanstack/react-query";
 import { getMyPackages } from "@/services/wallet";
 import NoDataFound from "../NoDataFound";
+import { publicKey } from "@metaplex-foundation/umi";
 
 export default function PackageCardList() {
-	const { connected, publicKey: walletAddress } = useWallet();
+	const wallet = useWallet();
+
+	const { connected, publicKey: walletAddress } = wallet;
 
 	const umi = useUmi();
 
 	const { data: packages, isFetching } = useQuery({
-		queryKey: ["my-packages"],
-		queryFn: () => getMyPackages(umi, walletAddress!),
+		queryKey: ["my-packages", walletAddress],
+		queryFn: () =>
+			getMyPackages(umi, walletAddress?.toString() || "", wallet),
 		enabled: !!walletAddress,
 	});
 
