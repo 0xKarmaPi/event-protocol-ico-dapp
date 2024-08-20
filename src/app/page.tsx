@@ -38,7 +38,7 @@ export default function Home() {
 				<div className="flex justify-center">
 					<Countdown
 						targetDate="2024-12-31T23:59:59"
-						totalRaised={1864866}
+						totalRaised={2000}
 						softCap={700000}
 						hardCap={4000000}
 						tokenEdition={8000000}

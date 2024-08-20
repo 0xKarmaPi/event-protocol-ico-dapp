@@ -59,7 +59,7 @@ const Countdown: React.FC<CountdownProps> = ({
 	});
 
 	return (
-		<div className="from-primary mx-auto rounded-lg bg-gradient-to-br to-purple-800 p-6 text-white shadow-lg">
+		<div className="mx-auto rounded-lg bg-gradient-to-br from-primary to-purple-800 p-6 text-white shadow-lg">
 			<div className="mb-6 text-center">
 				<h2 className="text-2xl font-bold">Eventprotocol IVO ends:</h2>
 				<p>
@@ -81,7 +81,7 @@ const Countdown: React.FC<CountdownProps> = ({
 				</div>
 			</div>
 			<p className="mb-6 text-center">
-				Total packages: {Number(1000000).toLocaleString()} packages
+				Total packages: {Number(2000).toLocaleString()} packages
 			</p>
 			<div className="mb-6 text-center">
 				<ButtonBuyPackage />

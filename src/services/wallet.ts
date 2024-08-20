@@ -1,6 +1,11 @@
 import { endpoint } from "@/hooks/umi";
 import { IPackage } from "@/types/package";
-import { AMOUNT_TOKEN, CLIFF_TIME, INITIAL_PERCENT } from "@/utils/constants";
+import {
+	AMOUNT_TOKEN,
+	CLIFF_TIME,
+	CYCLE_TIME,
+	INITIAL_PERCENT,
+} from "@/utils/constants";
 import { EventProtocolIcoSc } from "@/utils/event_protocol_ico_sc";
 import { web3, AnchorProvider, setProvider, Program } from "@coral-xyz/anchor";
 import { fetchAllMetadataByOwner } from "@metaplex-foundation/mpl-token-metadata";
@@ -83,7 +88,7 @@ export const getMyPackages = async (
 			AMOUNT_TOKEN - (json.wrapperStatus?.amountOfTokensClaimed ?? 0),
 		image: json?.image ?? "",
 		cliffTime: `${CLIFF_TIME / 86400000} days`,
-		cycle: `${CLIFF_TIME / 86400000} days`,
+		cycle: `${CYCLE_TIME / 86400000} days`,
 		claimable: true,
 		buyTime: "2022-01-01T00:00:00.000Z",
 		id: index + 1,
@@ -182,8 +187,6 @@ export const initPackageOfNft = async (nftPublicKey: string, wallet: any) => {
 };
 
 export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
-	console.log(wallet.publicKey.toBase58());
-
 	const programId = new web3.PublicKey(
 		process.env.NEXT_PUBLIC_IVO_CONTRACT_ADDRESS!,
 	);
@@ -257,14 +260,11 @@ export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
 			signer: wallet.publicKey,
 			systemProgram: web3.SystemProgram.programId,
 			tokenProgram: spl.TOKEN_PROGRAM_ID,
+			associatedTokenProgram: spl.ASSOCIATED_TOKEN_PROGRAM_ID,
 		})
 		.instruction();
 
 	const transaction = new web3.Transaction().add(createAtaIx, intrucstion);
 
-	try {
-		await provider.sendAndConfirm(transaction);
-	} catch (error) {
-		console.log(error);
-	}
+	await provider.sendAndConfirm(transaction);
 };
