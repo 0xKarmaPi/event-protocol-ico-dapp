@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { shortAddress } from "@/utils/common";
 import { Button, Divider } from "@nextui-org/react";
 import { FaCoins } from "react-icons/fa6";
-import { ReactNode, useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 import logoText from "/public/assets/logo-text.png";
 import { claimTokenOfNft, initPackageOfNft } from "@/services/wallet";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -56,9 +56,7 @@ export default function PackageCardItem({
 			toast("Claimed successfully", { type: "success" });
 			refetchList();
 		},
-		onError: (error) => {
-			console.log("onError", error);
-
+		onError: () => {
 			toast("Claim token failed", { type: "error" });
 		},
 	});
@@ -77,6 +75,15 @@ export default function PackageCardItem({
 	const renderButtonClaimToken = useMemo(() => {
 		// Allow Open package if not initialized
 		if (!packageItem?.wrapperStatus?.initialized) {
+			const timeAllowOpenPackage = dayjs(
+				Number(packageItem?.startTimeAllowOpenPackage) * 1000,
+			);
+			const now = new Date();
+			if (dayjs(now).isBefore(timeAllowOpenPackage)) {
+				return (
+					<CountdownButton endTime={timeAllowOpenPackage.format()} />
+				);
+			}
 			return (
 				<Button
 					isLoading={mutateInitPackage.isPending}
@@ -120,18 +127,16 @@ export default function PackageCardItem({
 					Claim Token
 				</Button>
 			);
-		} else {
-			// Disable Claim Token & show countdown until the next cycle
-			return (
-				<CountdownButton endTime={nextTimeAllowClaimToken.format()} />
-			);
 		}
+		// Disable Claim Token & show countdown until the next cycle
+		return <CountdownButton endTime={nextTimeAllowClaimToken.format()} />;
 	}, [
 		handleClaimToken,
 		handleInitPackage,
 		mutateClaimToken.isPending,
 		mutateInitPackage.isPending,
 		packageItem?.amountTokenClaimed,
+		packageItem?.startTimeAllowOpenPackage,
 		packageItem?.wrapperStatus?.initialized,
 	]);
 
@@ -159,9 +164,10 @@ export default function PackageCardItem({
 				{valuePackageItem("Buyer", shortAddress(packageItem.buyer))}
 				{valuePackageItem(
 					"Initial time",
-					dayjs(
-						(packageItem.wrapperStatus?.initTime ?? 0) * 1000,
-					).isValid() &&
+					packageItem.wrapperStatus?.initTime &&
+						dayjs(
+							(packageItem.wrapperStatus?.initTime ?? 0) * 1000,
+						).isValid() &&
 						dayjs(
 							(packageItem.wrapperStatus?.initTime ?? 0) * 1000,
 						).format("MMM DD, YYYY - HH:mm A"),
@@ -169,9 +175,10 @@ export default function PackageCardItem({
 				{valuePackageItem("Cliff time", packageItem.cliffTime)}
 				{valuePackageItem(
 					"Start claiming time",
-					dayjs(
-						(packageItem.wrapperStatus?.startTime ?? 0) * 1000,
-					).isValid() &&
+					packageItem.wrapperStatus?.startTime &&
+						dayjs(
+							(packageItem.wrapperStatus?.startTime ?? 0) * 1000,
+						).isValid() &&
 						dayjs(
 							(packageItem.wrapperStatus?.startTime ?? 0) * 1000,
 						).format("MMM DD, YYYY - HH:mm A"),
@@ -196,34 +203,6 @@ export default function PackageCardItem({
 				)}
 				<Divider className="my-4" />
 				{renderButtonClaimToken}
-				{/* {packageItem?.amountTokenClaimed === AMOUNT_TOKEN ? (
-					<Button variant="faded" disabled color="warning" fullWidth>
-						Claimed Token
-					</Button>
-				) : (
-					<>
-						{packageItem?.wrapperStatus?.initialized ? (
-							<Button
-								onClick={handleClaimToken}
-								isLoading={mutateClaimToken.isPending}
-								fullWidth
-								className="border border-primary bg-gradient-to-r from-primary to-purple-400 font-bold"
-								startContent={<FaCoins />}
-							>
-								Claim Token
-							</Button>
-						) : (
-							<Button
-								isLoading={mutateInitPackage.isPending}
-								onClick={handleInitPackage}
-								fullWidth
-								className="border border-primary bg-gradient-to-r from-primary to-purple-400 font-bold"
-							>
-								Open package
-							</Button>
-						)}
-					</>
-				)} */}
 			</div>
 		</div>
 	);

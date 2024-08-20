@@ -18,4 +18,5 @@ export interface IPackage {
 		nftAddress: string;
 		startTime: number | null;
 	};
+	startTimeAllowOpenPackage?: number;
 }

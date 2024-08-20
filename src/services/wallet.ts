@@ -79,6 +79,16 @@ export const getMyPackages = async (
 				}
 			}),
 	);
+	// Fetch time allow open package
+	const programId = new web3.PublicKey(
+		process.env.NEXT_PUBLIC_IVO_CONTRACT_ADDRESS!,
+	);
+	const program = new Program(idl as EventProtocolIcoSc);
+	const [masterPda] = web3.PublicKey.findProgramAddressSync(
+		[Buffer.from("master")],
+		programId,
+	);
+	const masterPdaFetch = await program.account.master.fetch(masterPda);
 
 	const packages: IPackage[] = jsonDatas?.map((json, index) => ({
 		name: json.name,
@@ -98,6 +108,7 @@ export const getMyPackages = async (
 		),
 		publicKey: json.publicKey,
 		wrapperStatus: json.wrapperStatus,
+		startTimeAllowOpenPackage: masterPdaFetch?.startSaleTime?.toNumber(),
 	}));
 
 	return packages;
@@ -227,23 +238,14 @@ export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
 		[Buffer.from("vault_token_owner")],
 		programId,
 	);
-	const tokenAtaPubkey = PublicKey.findProgramAddressSync(
-		[
-			wallet.publicKey.toBuffer(),
-			TOKEN_PROGRAM_ID.toBuffer(),
-			mint.toBuffer(),
-		],
-		spl.ASSOCIATED_TOKEN_PROGRAM_ID,
-	);
-	const createAtaIx = spl.createAssociatedTokenAccountInstruction(
-		wallet.publicKey,
-		tokenAtaPubkey[0],
-		wallet.publicKey,
-		mint,
-	);
+
 	const connection = new web3.Connection(endpoint);
 	const provider = new AnchorProvider(connection, wallet!, {});
 	setProvider(provider);
+	const senderEventTokenAta = await spl.getAssociatedTokenAddress(
+		mint,
+		wallet.publicKey,
+	);
 
 	const intrucstion = await program.methods
 		.claimToken(nft)
@@ -256,7 +258,7 @@ export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
 			mintOfEventToken: mint,
 			vaultOwnerPda,
 			vaultEventToken: vaultEventTokenPda,
-			senderEventTokenAta: tokenAtaPubkey[0],
+			senderEventTokenAta: senderEventTokenAta,
 			signer: wallet.publicKey,
 			systemProgram: web3.SystemProgram.programId,
 			tokenProgram: spl.TOKEN_PROGRAM_ID,
@@ -264,7 +266,8 @@ export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
 		})
 		.instruction();
 
-	const transaction = new web3.Transaction().add(createAtaIx, intrucstion);
+	const transaction = new web3.Transaction().add(intrucstion);
 
-	await provider.sendAndConfirm(transaction);
+	const res = await provider.sendAndConfirm(transaction);
+	return res;
 };
