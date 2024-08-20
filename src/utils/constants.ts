@@ -13,8 +13,8 @@ export const NAV_BARS = [
 		path: "/my-packages",
 	},
 	{
-		name: "Contact us",
-		path: "#",
+		name: "Admin Portal",
+		path: "/admin",
 	},
 ];
 

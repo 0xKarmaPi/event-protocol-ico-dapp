@@ -15,23 +15,20 @@ const CountdownButton: React.FC<CountdownButtonProps> = ({ endTime }) => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
 	useEffect(() => {
-		const targetTime = dayjs(endTime);
 		const interval = setInterval(() => {
-			const now = dayjs();
-			const diff = targetTime.diff(now);
+			const difference = +new Date(endTime) - +new Date();
 
-			if (diff <= 0) {
+			if (difference <= 0) {
 				setTimeRemaining(
-					"00 days : 00 hours : 00 minutes : 00 seconds",
+					"00 months : 00 days : 00 hours : 00 minutes : 00 seconds",
 				);
 				setIsDisabled(false);
 				clearInterval(interval);
 			} else {
-				const duration = dayjs.duration(diff);
-				const days = String(duration.days()).padStart(2, "0");
-				const hours = String(duration.hours()).padStart(2, "0");
-				const minutes = String(duration.minutes()).padStart(2, "0");
-				const seconds = String(duration.seconds()).padStart(2, "0");
+				const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+				const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+				const minutes = Math.floor((difference / 1000 / 60) % 60);
+				const seconds = Math.floor((difference / 1000) % 60);
 				setTimeRemaining(
 					`${days} days : ${hours} h : ${minutes} m : ${seconds} s`,
 				);
@@ -42,7 +39,7 @@ const CountdownButton: React.FC<CountdownButtonProps> = ({ endTime }) => {
 	}, [endTime]);
 
 	return (
-		<Button variant="faded" disabled={isDisabled} color="warning" fullWidth>
+		<Button variant="faded" disabled={isDisabled} color="primary" fullWidth>
 			{isDisabled ? `${timeRemaining}` : "Claim Token"}
 		</Button>
 	);
