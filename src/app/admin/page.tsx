@@ -79,6 +79,7 @@ export default function AdminPage() {
 							<h2>Contraction Wallet</h2>
 							<div className="flex items-center gap-2 text-sm text-gray-300">
 								<Input
+									readOnly
 									className="flex-1"
 									variant="faded"
 									onChange={(e) => {

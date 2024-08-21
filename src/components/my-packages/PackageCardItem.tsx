@@ -103,7 +103,7 @@ export default function PackageCardItem({
 		if (packageItem?.amountTokenClaimed === AMOUNT_TOKEN) {
 			return (
 				<Button variant="faded" disabled color="warning" fullWidth>
-					Claimed Token
+					Claimed
 				</Button>
 			);
 		}

@@ -12,10 +12,10 @@ export const NAV_BARS = [
 		name: "My Packages",
 		path: "/my-packages",
 	},
-	{
-		name: "Admin Portal",
-		path: "/admin",
-	},
+	// {
+	// 	name: "Admin Portal",
+	// 	path: "/admin",
+	// },
 ];
 
 export const CLIFF_TIME = 60 * 24 * 60 * 60 * 1000; // 60 days to miliseconds
