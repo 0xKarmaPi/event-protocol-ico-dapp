@@ -45,7 +45,8 @@ export default function PackageCardItem({
 			toast("Open package successfully", { type: "success" });
 			refetchList();
 		},
-		onError: () => {
+		onError: (error) => {
+			console.log(error);
 			toast("Open package failed", { type: "error" });
 		},
 	});
@@ -57,7 +58,8 @@ export default function PackageCardItem({
 			toast("Claimed successfully", { type: "success" });
 			refetchList();
 		},
-		onError: () => {
+		onError: (error) => {
+			console.log(error);
 			toast("Claim token failed", { type: "error" });
 		},
 	});

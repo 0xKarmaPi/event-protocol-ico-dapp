@@ -14,7 +14,6 @@ import { PublicKey } from "@solana/web3.js";
 import dayjs from "dayjs";
 import idl from "@/utils/event_protocol_ico_sc.json";
 import * as spl from "@solana/spl-token";
-import { TOKEN_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/utils/token";
 
 // Cache object to store fetched data
 const cache: { [uri: string]: any } = {};
@@ -227,9 +226,7 @@ export const claimTokenOfNft = async (nftPublicKey: string, wallet: any) => {
 		wallet.publicKey,
 	);
 
-	const mint = new web3.PublicKey(
-		"DGscu2LVnabzuQrjxjMUXuDHJvjhCnBFzD2HbL4B5vPh",
-	);
+	const mint = new web3.PublicKey(process.env.NEXT_PUBLIC_TOKEN_MINT!);
 	const [vaultEventTokenPda] = web3.PublicKey.findProgramAddressSync(
 		[Buffer.from("vault_token"), mint.toBuffer()],
 		programId,
