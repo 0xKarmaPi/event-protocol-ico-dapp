@@ -85,13 +85,20 @@ export default function PackageCardList() {
 				<NoDataFound message="No packages found" />
 			)}
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{packages?.map((item) => (
-					<PackageCardItem
-						refetchList={refetch}
-						key={item.id}
-						packageItem={item}
-					/>
-				))}
+				{packages
+					?.sort(
+						(a, b) =>
+							(a.wrapperStatus?.amountOfTokensClaimed ?? 0) -
+							(b.wrapperStatus?.amountOfTokensClaimed ?? 0),
+					)
+					?.map((item, index) => (
+						<PackageCardItem
+							index={index + 1}
+							refetchList={refetch}
+							key={item.id}
+							packageItem={item}
+						/>
+					))}
 			</div>
 		</>
 	);

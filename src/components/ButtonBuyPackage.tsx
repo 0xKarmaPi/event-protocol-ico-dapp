@@ -15,7 +15,7 @@ import { shortAddress } from "@/utils/common";
 import dayjs from "dayjs";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { toast } from "react-toastify";
-import nftIcon from "/public/assets/logo-text.png";
+import nftIcon from "/public/assets/logo-text.jpg";
 import {
 	AMOUNT_TOKEN,
 	CLIFF_TIME,

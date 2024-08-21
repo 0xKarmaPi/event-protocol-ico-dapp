@@ -3,9 +3,8 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { shortAddress } from "@/utils/common";
 import { Button, Divider } from "@nextui-org/react";
-import { FaCoins } from "react-icons/fa6";
-import { ReactNode, useCallback, useMemo, useState } from "react";
-import logoText from "/public/assets/logo-text.png";
+import { ReactNode, useCallback, useMemo } from "react";
+import logoText from "/public/assets/logo-text.jpg";
 import { claimTokenOfNft, initPackageOfNft } from "@/services/wallet";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useMutation } from "@tanstack/react-query";
@@ -21,10 +20,12 @@ import CountdownButton from "./CountdownButton";
 interface IPackageCardItemProps {
 	packageItem: IPackage;
 	refetchList: () => void;
+	index: number;
 }
 export default function PackageCardItem({
 	packageItem,
 	refetchList,
+	index,
 }: IPackageCardItemProps) {
 	const wallet = useWallet();
 
@@ -151,7 +152,7 @@ export default function PackageCardItem({
 					className="w-full rounded-t-lg transition-all group-hover:scale-110"
 				/>
 				<p className="absolute left-4 top-4 rounded-lg border bg-white p-1 px-2 font-bold text-primary backdrop-blur-lg">
-					No.{packageItem.id}
+					No.{index}
 				</p>
 			</div>
 
@@ -197,7 +198,9 @@ export default function PackageCardItem({
 				{valuePackageItem(
 					"Total Token remaining",
 					<span className="text-yellow-500">
-						{packageItem.amountTokenRemaining?.toLocaleString()}{" "}
+						{packageItem.amountTokenRemaining?.toLocaleString()}/
+						{AMOUNT_TOKEN.toLocaleString()}
+						{` `}
 						EVENT
 					</span>,
 				)}
