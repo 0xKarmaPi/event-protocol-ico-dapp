@@ -4,8 +4,12 @@ import { Button, Input } from "@nextui-org/react";
 import sol from "/public/assets/solana.png";
 import Image from "next/image";
 import { useState } from "react";
+import useAdminInfo from "@/hooks/useAdminInfo";
+import { redirect } from "next/navigation";
 
 export default function AdminPage() {
+	const { isAdmin } = useAdminInfo();
+
 	const [wallets, setWallets] = useState({
 		foundation: {
 			address: "0x12",
@@ -16,6 +20,9 @@ export default function AdminPage() {
 			balance: 0,
 		},
 	});
+	if (!isAdmin) {
+		return redirect("/");
+	}
 
 	return (
 		<section className="mx-auto max-w-5xl p-4">

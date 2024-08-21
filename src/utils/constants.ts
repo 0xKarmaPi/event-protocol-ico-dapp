@@ -3,21 +3,6 @@ export const COOKIES = {
 	REFRESHTOKEN: "refreshToken",
 };
 
-export const NAV_BARS = [
-	{
-		name: "IVO Details",
-		path: "/",
-	},
-	{
-		name: "My Packages",
-		path: "/my-packages",
-	},
-	// {
-	// 	name: "Admin Portal",
-	// 	path: "/admin",
-	// },
-];
-
 export const CLIFF_TIME = 60 * 24 * 60 * 60 * 1000; // 60 days to miliseconds
 export const CYCLE_TIME = 30 * 24 * 60 * 60 * 1000; // 30 days to miliseconds
 export const INITIAL_PERCENT = 10; // 10%

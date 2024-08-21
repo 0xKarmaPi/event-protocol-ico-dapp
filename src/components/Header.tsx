@@ -9,16 +9,27 @@ import {
 	NavbarMenuToggle,
 } from "@nextui-org/react";
 import Logo from "./Logo";
-import { NAV_BARS } from "@/utils/constants";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import useAdminInfo from "@/hooks/useAdminInfo";
 
+export const NAV_BARS = [
+	{
+		name: "IVO Details",
+		path: "/",
+	},
+	{
+		name: "My Packages",
+		path: "/my-packages",
+	},
+];
 export default function Header() {
 	const pathname = usePathname();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { isAdmin } = useAdminInfo();
 
 	return (
 		<Navbar
@@ -42,7 +53,7 @@ export default function Header() {
 					>
 						<Link
 							className={clsx("text-foreground", {
-								"!text-primary font-bold":
+								"font-bold !text-primary":
 									pathname === item.path,
 							})}
 							href={item.path}
@@ -64,8 +75,8 @@ export default function Header() {
 				{NAV_BARS.map((item) => (
 					<NavbarItem key={item.name}>
 						<Link
-							className={clsx("text-foreground text-center", {
-								"!text-primary font-bold":
+							className={clsx("text-center text-foreground", {
+								"font-bold !text-primary":
 									pathname === item.path,
 							})}
 							href={item.path}
@@ -74,6 +85,19 @@ export default function Header() {
 						</Link>
 					</NavbarItem>
 				))}
+				{isAdmin && (
+					<NavbarItem>
+						<Link
+							className={clsx("text-center text-foreground", {
+								"font-bold !text-primary":
+									pathname === "/admin",
+							})}
+							href={"/admin"}
+						>
+							Admin Portal
+						</Link>
+					</NavbarItem>
+				)}
 			</NavbarContent>
 
 			<NavbarContent justify="end">
