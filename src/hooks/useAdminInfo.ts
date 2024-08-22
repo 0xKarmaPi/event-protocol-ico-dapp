@@ -39,8 +39,6 @@ const useAdminInfo = () => {
 			const provider = new AnchorProvider(connection, wallet!, {});
 			setProvider(provider);
 			const master = await program.account.master.fetch(masterPda);
-			console.log("MaSTER:", master);
-
 			return master;
 		},
 	});

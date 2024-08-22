@@ -122,7 +122,7 @@ export default function AdminPage() {
 		onSuccess: () => {
 			toast("Success split token", { type: "success" });
 		},
-		onError: (error) => {
+		onError: () => {
 			toast("Error split token", { type: "error" });
 		},
 	});
