@@ -7,7 +7,7 @@ import {
 } from "@solana/wallet-adapter-react";
 import { useQuery } from "@tanstack/react-query";
 import { endpoint } from "./umi";
-import idlNew from "@/utils/event_protocol_token.json";
+import idlAdmin from "@/utils/event_protocol_token.json";
 
 const useAdminInfo = () => {
 	const { publicKey: walletAddress, connected } = useWallet();
@@ -26,9 +26,9 @@ const useAdminInfo = () => {
 		queryKey: ["admin-info", walletAddress],
 		queryFn: async () => {
 			const programId = new web3.PublicKey(
-				"EWHRHcuWKoZXjjoDdDoF1BCYH7WrLmKxvpKmxHcmh7WH",
+				process.env.NEXT_PUBLIC_ADMIN_PROGRAM_ID!,
 			);
-			const program = new Program(idlNew as EventProtocolToken);
+			const program = new Program(idlAdmin as EventProtocolToken);
 			const [masterPda] = web3.PublicKey.findProgramAddressSync(
 				[Buffer.from("master")],
 				programId,
@@ -39,6 +39,8 @@ const useAdminInfo = () => {
 			const provider = new AnchorProvider(connection, wallet!, {});
 			setProvider(provider);
 			const master = await program.account.master.fetch(masterPda);
+			console.log("MaSTER:", master);
+
 			return master;
 		},
 	});
@@ -48,6 +50,7 @@ const useAdminInfo = () => {
 			adminInfo?.admin?.toString() === walletAddress?.toString(),
 		adminWalletAddress: adminInfo?.admin?.toString(),
 		foundationAddress: adminInfo?.foundationAddress?.toString(),
+		startTimeAllowSplitToken: adminInfo?.startTime?.toNumber(),
 	};
 };
 

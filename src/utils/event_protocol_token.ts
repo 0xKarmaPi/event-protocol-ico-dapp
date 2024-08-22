@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/event_protocol_token.json`.
  */
 export type EventProtocolToken = {
-	address: "EWHRHcuWKoZXjjoDdDoF1BCYH7WrLmKxvpKmxHcmh7WH";
+	address: "7AKNwCkSvf1ACnCxJBHZMvinFhnmrTCRvhQDiTqEmr7h";
 	metadata: {
 		name: "eventProtocolToken";
 		version: "0.1.0";
