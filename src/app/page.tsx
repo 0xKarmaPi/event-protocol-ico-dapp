@@ -4,7 +4,7 @@ import { FaQuestion } from "react-icons/fa6";
 
 export default function Home() {
 	return (
-		<section className="mx-auto mt-8 flex max-w-5xl flex-col-reverse justify-between gap-8 rounded-lg p-4 md:flex-row">
+		<section className="mx-auto mt-8 flex max-w-5xl flex-col-reverse justify-between gap-8 rounded-lg p-4 dark md:flex-row">
 			<div className="order-2 flex-1 md:order-1">
 				<h1 className="text-3xl font-bold md:text-5xl">
 					Eventprotocol is IVO
